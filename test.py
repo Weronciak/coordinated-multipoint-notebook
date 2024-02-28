@@ -4,7 +4,6 @@ import dimod
 import networkx as nx
 import dwave.inspector
 
-
 Q={('X[1]','X[1]',):-52,
 ('X[1]','X[2]',):16,
 ('X[1]','X[3]',):9,
@@ -43,18 +42,15 @@ Q={('X[1]','X[1]',):-52,
 ('X[8]','X[8]',):-93,
 }
 
-
 solver = DWaveSampler(solver='Advantage2_prototype1.1', token='DEV-6d884649a230f40ade123f657681862752489a70')
 solver_graph = solver.to_networkx_graph()
 
 emb = minorminer.find_embedding(Q, solver_graph)
 sampler = FixedEmbeddingComposite(solver, embedding=emb)
 
-
 response = sampler.sample_qubo(Q, num_reads=2500, max_answers=100, annealing_time=168)
 ener=list(response.data_vectors['energy'])
 print(ener[0])
-
 
 #print(ener)
 print(str(list(response.samples())[0]))
